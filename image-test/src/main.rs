@@ -32,10 +32,8 @@ fn main() {
     let image = image::ImageBuffer::from_fn(image_width, image_height, |x, y| {
         let x_norm = x as f32 / image_width as f32;
         let y_norm = y as f32 / image_height as f32;
-        let mut color = image::Rgb([(255.0 * x_norm) as u8, 0, (255.0 * y_norm) as u8]);
         let t = mandelbrot(scale * (x_norm - 0.5) + translate_x, scale * (y_norm - 0.5));
-        color[1] = (255.0 * t) as u8;
-        color
+        image::Rgb([(255.0 * x_norm) as u8, (255.0 * t) as u8, (255.0 * y_norm) as u8])
     });
 
     image.save("output.png").unwrap();

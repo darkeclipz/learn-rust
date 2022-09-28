@@ -1,0 +1,1 @@
+C:\Users\larsr\Documents\Repos\learn-rust\dnd\target\debug\dnd.exe: C:\Users\larsr\Documents\Repos\learn-rust\dnd\src\attribute.rs C:\Users\larsr\Documents\Repos\learn-rust\dnd\src\entity.rs C:\Users\larsr\Documents\Repos\learn-rust\dnd\src\main.rs

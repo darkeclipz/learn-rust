@@ -2,40 +2,76 @@
 // https://github.com/image-rs/image/blob/master/README.md
 extern crate image;
 
-fn mandelbrot(x: f32, y: f32) -> f32 {
-    let mut z = (0f32, 0f32);
-    let c = (x, y);
-    let max_iterations = 64;
-    let mut i = 0;
-    while i < max_iterations {
-        z = (z.0 * z.0 - z.1 * z.1 + c.0, 2.0 * z.0 * z.1 + c.1);
-        if z.0 * z.0 + z.1 * z.1 > 4.0 {
-            // Smooth iteration count:  (i - log2(log2(dot(z, z)))) / n  
-            let norm = z.0 * z.0 + z.1 * z.1;
-            return (i as f32 - norm.log2().log2()) / max_iterations as f32;
-        }
-        i += 1;
-    }
-    1.0
+#[derive(Clone, Copy)]
+struct Complex {
+    pub a: f32, 
+    pub b: f32,
 }
 
-///! An example of writing images!
+impl std::ops::Add for Complex {
+    type Output = Self;
+
+    fn add(self, rhs: Self) -> Self {
+        Complex {
+            a: self.a + rhs.a,
+            b: self.b + rhs.b,
+        }
+    }
+}
+
+impl std::ops::Mul for Complex {
+    type Output = Self;
+
+    fn mul(self, rhs: Self) -> Self {
+        Complex { 
+            a: self.a * rhs.a - self.b * rhs.b, 
+            b: self.a * rhs.b + self.b * rhs.a ,
+        }
+    }
+}
+
+impl Complex {
+    fn conjugate(self) -> f32 {
+        self.a * self.a + self.b * self.b
+    }
+}
+
+fn mandelbrot(x: f32, y: f32) -> f32 {
+    let mut z = Complex { a: 0.0, b: 0.0 };
+    let c = Complex { a: x, b: y };
+    let max = 256;
+    let mut i = 0;
+    while i < max && z.conjugate() < 32.0 {
+        z = z * z + c;
+        i += 1;
+    }
+    return (i as f32 - z.conjugate().log2().log2()) / (max as f32);
+}
+
+fn color(t: f32) -> [u8; 3] {
+    let a = (0.5, 0.5, 0.5);
+    let b = (0.5, 0.5, 0.5);
+    let c = (1.0, 1.0, 1.0);
+    let d = (0.0, 0.10, 0.20);
+    let r = b.0 * (6.28318 * (c.0 * t + d.0)).cos() + a.0;
+    let g = b.1 * (6.28318 * (c.1 * t + d.1)).cos() + a.1;
+    let b = b.2 * (6.28318 * (c.2 * t + d.2)).cos() + a.2;
+    [(255.0 * r) as u8, (255.0 * g) as u8, (255.0 * b) as u8]
+}
+
 fn main() {
+    let image_width = 1920;
+    let image_height = 1080;
 
-    let image_width = 800;
-    let image_height = 500;
-    let scale = 2.5;
-    let translate_x = -0.7;
+    let mut image_buffer = image::ImageBuffer::new(
+        image_width, image_height);
 
-    println!("Generating mandelbrot...");
+    for (x, y, pixel) in image_buffer.enumerate_pixels_mut() {
+        let u = x as f32 / image_height as f32;
+        let v = y as f32 / image_height as f32;
+        let t = mandelbrot(2.5 * (u - 0.5) - 1.4, 2.5 * (v - 0.5));
+        *pixel = image::Rgb(color((2.0 * t + 0.5) % 1.0));
+    }
 
-    let image = image::ImageBuffer::from_fn(image_width, image_height, |x, y| {
-        let x_norm = x as f32 / image_width as f32;
-        let y_norm = y as f32 / image_height as f32;
-        let t = mandelbrot(scale * (x_norm - 0.5) + translate_x, scale * (y_norm - 0.5));
-        image::Rgb([(255.0 * x_norm) as u8, (255.0 * t) as u8, (255.0 * y_norm) as u8])
-    });
-
-    image.save("output.png").unwrap();
-    println!("Image written to 'output.png'.");
+    image_buffer.save("mandelbrot.png").unwrap();
 }

@@ -1,6 +1,5 @@
-use std::string::String;
 use rand::Rng;
-
+use std::string::String;
 
 #[derive(Debug)]
 pub struct Entity {
@@ -14,19 +13,23 @@ pub struct Entity {
 pub struct Weapon {
     pub name: String,
     pub die: Die,
-    pub value: u32
+    pub value: u32,
 }
 
 impl Weapon {
     pub fn get_damage(&self) -> u32 {
         if self.die.eyes == 0 {
-            return 0
+            return 0;
         }
         self.die.throw() as u32
     }
 
     pub fn default() -> Weapon {
-        Weapon { name: String::from("NULL Weapon"), die: Die { eyes: 0 }, value: 0 }
+        Weapon {
+            name: String::from("NULL Weapon"),
+            die: Die { eyes: 0 },
+            value: 0,
+        }
     }
 }
 
@@ -40,7 +43,7 @@ impl Entity {
             name,
             health: 0,
             attributes: Attributes::default(),
-            weapon: Weapon::default()
+            weapon: Weapon::default(),
         };
 
         entity.health = entity.max_health();
@@ -50,8 +53,7 @@ impl Entity {
     pub fn add_damage(&mut self, dmg: u32) {
         if dmg > self.health {
             self.health = 0;
-        }
-        else {
+        } else {
             self.health -= dmg;
         }
     }
@@ -73,7 +75,6 @@ impl Entity {
     pub fn equip_weapon(&mut self, weapon: Weapon) {
         self.weapon = weapon;
     }
-    
 }
 
 #[derive(Debug)]
@@ -88,13 +89,13 @@ pub struct Attributes {
 
 impl Attributes {
     pub fn default() -> Attributes {
-        Attributes { 
+        Attributes {
             strength: 10,
             dexterity: 10,
             constitution: 10,
             intelligence: 10,
             wisdom: 10,
-            charisma: 10
+            charisma: 10,
         }
     }
 }
@@ -107,13 +108,16 @@ pub struct Modifiers {
 
 impl Modifiers {
     pub fn default() -> Modifiers {
-        Modifiers { attack_modifier: 0, defense_modifier: 0 }
-    }   
+        Modifiers {
+            attack_modifier: 0,
+            defense_modifier: 0,
+        }
+    }
 }
 
 #[derive(Debug, Clone)]
 pub struct Die {
-    pub eyes: u8
+    pub eyes: u8,
 }
 
 impl Die {

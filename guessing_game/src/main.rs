@@ -77,70 +77,127 @@ fn first_word(s: &String) -> &str {
     &s[..]
 }
 
-fn main() {
+fn test() {
 
-    // Basic stuff
-    tuple();
-    array();
-    launch();
-    let sentence = String::from("first word!");
-    println!("First word is '{}'.", first_word(&sentence));
+    let mut n: u32 = 10;
+    n = 11;
 
-    // Structures
-    let user = build_user(
-        String::from("hello@optimalalgoritm.com"), 
-        String::from("Optimal Algorithm")
-    );
+    test2(n);
 
-    println!(
-        "Username '{}' logged in {} times.", 
-        user.username, 
-        user.sign_in_count
-    );
+    let n = 12;
 
-    let black = Color(0, 0, 0);
-    let origin = Point(0, 0, 0);
-
-    let rect1 = Rectangle { width: 30, height: 50 };
-    println!("Area of {:?} is {}", rect1, rect1.area());
-
-    let rect2 = Rectangle { width: 25, height: 60 };
-    println!("Can rect1 hold rect2? {}", rect1.can_hold(&rect2));
-
-    let square = Rectangle::square(25);
-    println!("Square {:?}", square);
+    // n = 18;
 
 
-    // Guessing game
-    println!("Guess the number!");
+    let text = String::from("Hello world");
+    let example: &str = "Hello world";
 
-    let secret_number = rand::thread_rng().gen_range(1..101);
+    test3(example);
+    test4(example);
 
-    loop {
-        println!("Please input your guess.");
+    println!("{}", example);
+}
 
-        let mut guess = String::new();
-    
-        io::stdin()
-            .read_line(&mut guess)
-            .expect("Failed to read the line.");
-    
-        let guess: u32 = match guess.trim().parse() {
-            Ok(num) => num,
-            Err(_) => continue,
-        };
-    
-        println!("You guessed: {}", guess);
-        
-        match guess.cmp(&secret_number) {
-            Ordering::Less => println!("Too small!"),
-            Ordering::Greater => println!("Too big!"),
-            Ordering::Equal => {
-                println!("You win!");
-                break;
-            }
-        }
+fn test2(mut n: u32) {
+    n = 12;
+    println!("{}", n);
+}
+
+fn test3(mut text: &str) -> &str {
+    text = "Hello";
+
+    if 12 > 10 {
+        return text;
     }
 
-    println!("Max points is {}.", MAX_POINTS);
+
+    
+        
+    text
+}
+
+fn test4(mut text: &str) {
+    text = "Edit the string!";
+}
+
+use std::fs;
+
+fn read_file(file_path: &str) {
+    println!("Reading file with path: {file_path}");
+    let contents = fs::read_to_string(file_path)
+        .expect("Should have been able to read the file.");
+    println!("With text:\n{contents}");
+}
+
+fn main() {
+
+    let file = String::from("example.txt");
+    read_file(&file);
+
+    // test();
+
+    // // Basic stuff
+    // tuple();
+    // array();
+    // launch();
+    // let sentence = String::from("first word!");
+    // println!("First word is '{}'.", first_word(&sentence));
+
+    // // Structures
+    // let user = build_user(
+    //     String::from("hello@optimalalgoritm.com"), 
+    //     String::from("Optimal Algorithm")
+    // );
+
+    // println!(
+    //     "Username '{}' logged in {} times.", 
+    //     user.username, 
+    //     user.sign_in_count
+    // );
+
+    // let black = Color(0, 0, 0);
+    // let origin = Point(0, 0, 0);
+
+    // let rect1 = Rectangle { width: 30, height: 50 };
+    // println!("Area of {:?} is {}", rect1, rect1.area());
+
+    // let rect2 = Rectangle { width: 25, height: 60 };
+    // println!("Can rect1 hold rect2? {}", rect1.can_hold(&rect2));
+
+    // let square = Rectangle::square(25);
+    // println!("Square {:?}", square);
+
+
+    // // Guessing game
+    // println!("Guess the number!");
+
+    // let secret_number = rand::thread_rng().gen_range(1..101);
+
+    // loop {
+    //     println!("Please input your guess.");
+
+    //     let mut guess = String::new();
+    
+    //     io::stdin()
+    //         .read_line(&mut guess)
+    //         .expect("Failed to read the line.");
+    
+    //     let guess: u32 = match guess.trim().parse() {
+    //         Ok(num) => num,
+    //         Err(_) => continue,
+    //     };
+    
+    //     println!("You guessed: {}", guess);
+        
+    //     match guess.cmp(&secret_number) {
+    //         Ordering::Less => println!("Too small!"),
+    //         Ordering::Greater => println!("Too big!"),
+    //         Ordering::Equal => {
+    //             println!("You win!");
+    //             break;
+    //         }
+    //     }
+    // }
+
+    // println!("Max points is {}.", MAX_POINTS);
 }

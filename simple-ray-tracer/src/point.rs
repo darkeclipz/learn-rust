@@ -1,6 +1,5 @@
 use std::ops::{Add, Sub};
-mod vector;
-use vector::Vector3;
+use crate::vector::Vector3;
 
 
 #[derive(Copy, Clone, Debug)]

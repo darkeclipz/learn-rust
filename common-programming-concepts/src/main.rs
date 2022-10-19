@@ -11,7 +11,6 @@ fn main() {
 }
 
 fn variables() {
-
     // Immutable variables.
     let x = 5;
     println!("The value of x is: {x}");
@@ -23,7 +22,7 @@ fn variables() {
     println!("The value of x is: {y}");
     y = 20;
     println!("The value of x is: {y}");
-    
+
     // Constants
     const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
     println!("The value of THREE_HOURS_IN_SECONDS is: {THREE_HOURS_IN_SECONDS}");
@@ -110,11 +109,23 @@ fn data_types() {
 
     fn array_type() {
         let a = [1, 2, 3, 4, 5];
-        let months = ["January", "February", "March", "April", "May", "June", "July",
-                                  "August", "September", "October", "November", "December"];
+        let months = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ];
 
         let b = [10; 10]; // array of [10, 10, 10, ..., 10]
-                                     // [value; n-times]
+                          // [value; n-times]
 
         let c = b[2];
         println!("The value of c is: {c}");
@@ -128,16 +139,13 @@ fn data_types() {
     character_type();
     tuple_type();
     array_type();
-
 }
 
 fn functions() {
-
     fn five() -> i32 {
         5
     }
 
     let x = five();
     println!("The value of x is: {x}");
-
 }

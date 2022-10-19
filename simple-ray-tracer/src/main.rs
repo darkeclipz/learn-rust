@@ -17,7 +17,7 @@ pub struct Sphere {
     pub color: Color
 }
 
-pub struct Scene{
+pub struct Scene {
     pub width: u32,
     pub height: u32,
     pub fov: f64,

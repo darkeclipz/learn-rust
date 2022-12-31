@@ -1,0 +1,18 @@
+define model Australia {
+    define RgbColor {0, 1, 2}                   ; [0..2]
+    define variables {
+        x1: RgbColor
+        x2: RgbColor
+        x3: RgbColor
+        x4: RgbColor
+        x5: RgbColor
+        x6: RgbColor
+        x7: RgbColor
+    }
+    define constraints {
+        x1 != x2
+
+        
+
+    }
+}
